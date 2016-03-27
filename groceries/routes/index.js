@@ -37,5 +37,20 @@ router.get('/signout', function(req, res) {
     res.redirect('/');
 });
 
+router.get('/getrecipe',function(req,res,next){
+    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/extract?forceExtraction=false&url=" + encodeURIComponent(req.query.q)
+    console.log(url)
+    unirest.get(url)
+        .header("X-Mashape-Key", "syMrIkEfZUmshCO3nkdEO5DN4UENp1uAQvujsnMqDOGOwJOOXS")
+        .end(function (result) {
+            console.log(result.status, result.headers, result.body);
+            if(result.status == 200){
+                res.status(200).json(result.body);
+            } else {
+                res.status(404).json({'message': result.body.message});
+            }
+        });
+})
+
 return router;
 }
