@@ -13,7 +13,7 @@ module.exports = function(passport){
 
 /* GET login page. */
 router.get('/', isLoggedin, function(req, res){
-    res.sendfile('views/info.html');
+    res.sendfile('views/index.html');
 });
 
 /* Handle Login POST */
