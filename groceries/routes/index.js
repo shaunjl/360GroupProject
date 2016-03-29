@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../models/user');
+var unirest = require('unirest');
 
 var isLoggedin = function (req, res, next) {
 if (req.isAuthenticated())
@@ -11,7 +13,7 @@ module.exports = function(passport){
 
 /* GET login page. */
 router.get('/', isLoggedin, function(req, res){
-    res.sendfile('views/info.html');
+    res.sendfile('views/index.html');
 });
 
 /* Handle Login POST */
@@ -37,8 +39,17 @@ router.get('/signout', function(req, res) {
     res.redirect('/');
 });
 
-router.get('/getrecipe',function(req,res,next){
-    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/extract?forceExtraction=false&url=" + encodeURIComponent(req.query.q)
+router.get('/user',isLoggedin, function(req, res){
+     console.log(req.session.passport.user)
+     console.log(req.user)
+     User.findById(req.session.passport.user, function(err, user) {
+        console.log('deserializing user:',user);
+        res.json(user);
+    });
+});
+
+router.get('/recipefromurl',isLoggedin,function(req,res,next){
+    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/extract?forceExtraction=false&url=" + encodeURIComponent(req.query.url)
     console.log(url)
     unirest.get(url)
         .header("X-Mashape-Key", "syMrIkEfZUmshCO3nkdEO5DN4UENp1uAQvujsnMqDOGOwJOOXS")
@@ -49,9 +60,43 @@ router.get('/getrecipe',function(req,res,next){
             } else {
                 res.status(404).json({'message': result.body.message});
             }
- //://itunes.apple.com/us/album/ghetto-d-10th-anniversary/id715827364       });
 	});
+ });
+
+router.get('/recipesfromparams',isLoggedin,function(req,res,next){
+    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete"
+    url += '?cuisine=' + encodeURIComponent(req.query.cuisine)
+    url += '&diet=' + encodeURIComponent(req.query.diet)
+    url += '&intolerances=' + encodeURIComponent(req.query.intolerances.join())
+    url += '&query=' + encodeURIComponent(req.query.query)
+    url += '&type=' + encodeURIComponent(req.query.type)    
+    console.log(url)
+    unirest.get(url)
+        .header("X-Mashape-Key", "syMrIkEfZUmshCO3nkdEO5DN4UENp1uAQvujsnMqDOGOwJOOXS")
+        .end(function (result) {
+            console.log(result.status, result.headers, result.body);
+            if(result.status == 200){
+                res.status(200).json(result.body);
+            } else {
+                res.status(404).json({'message': result.body.message});
+            }
+        });
  })
 
-   return router;
+router.get('/autocomplete',isLoggedin, function(req,res,next){
+    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query=" + encodeURIComponent(req.query.query)
+    console.log(url)
+    unirest.get(url)
+        .header("X-Mashape-Key", "syMrIkEfZUmshCO3nkdEO5DN4UENp1uAQvujsnMqDOGOwJOOXS")
+        .end(function (result) {
+            console.log(result.status, result.headers, result.body);
+            if(result.status == 200){
+                res.status(200).json(result.body);
+            } else {
+                res.status(404).json({'message': result.body.message});
+            }
+        });
+ });
+
+return router;
 }
