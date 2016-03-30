@@ -3,7 +3,7 @@ app.controller('MainCtrl', [
   '$scope','$http',
   function($scope,$http){
    
-    $scope.staticRecipe = [{url:"http://allrecipes.com/recipes/669/meat-and-poultry/pork/bacon/"];
+//    $scope.staticRecipe = [{url:"http://allrecipes.com/recipes/669/meat-and-poultry/pork/bacon/"];
 //var person = {firstName:"John", lastName:"Doe", age:46};
 
 //ON PAGE LOAD
