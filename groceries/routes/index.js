@@ -49,6 +49,7 @@ router.get('/user',isLoggedin, function(req, res){
 });
 
 router.get('/recipefromurl',isLoggedin,function(req,res,next){
+    console.log(req.query)
     var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/extract?forceExtraction=false&url=" + encodeURIComponent(req.query.url)
     console.log(url)
     unirest.get(url)

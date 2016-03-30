@@ -3,13 +3,15 @@
 <head>
 
 <title>Login Page</title>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="javascripts/controller.js"></script>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 </head>
 <body>
-<h1>You are now logged in! </h1>
 <div ng-app="app" ng-controller="MainCtrl">
- This is a :  {{test}}
 
-  <button onclick="getLoggedInUser()">Click me</button>
+<h1>You are now logged in {{user.firstName}}! </h1>
+ This is a user:  {{user}}
 
 
 </div>
