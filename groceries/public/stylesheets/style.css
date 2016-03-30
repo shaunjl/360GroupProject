@@ -1,8 +1,13 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 3rem;
 }
 
-a {
-  color: #00B7FF;
+.container {
+  max-width: 900px;
+}
+
+@media (min-width: 750px) {
+  #left {
+  border-right: 1px solid rgba(0,0,0,.1);
+  }
 }

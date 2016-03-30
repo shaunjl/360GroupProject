@@ -1,21 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-
-<title>Login Page</title>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script src="javascripts/controller.js"></script>
-<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
-</head>
-<body>
-<div ng-app="app" ng-controller="MainCtrl">
-
-<h1>You are now logged in {{user.firstName}}! </h1>
- This is a user:  {{user}}
-
-
-</div>
-
-<a href="/signout">Logout here</a>.
-</body>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header clearfix">
+        <nav class="navbar navbar-light">
+          <a class="navbar-brand" href="/">
+            <i class="fa fa-cutlery"></i>&nbsp;&nbsp;Recipe To List
+          </a>
+          <div class="nav navbar-nav pull-xs-right">
+            <a class="btn btn-secondary" href="/signout"><i class="fa fa-sign-out"></i> Sign Out</a>
+          </div>
+        </nav>
+      </div>
+      <hr>
+      <div class="row">
+        <div id="left" class="col-md-6">
+          <form>
+            <h4>Enter recipe by URL</h4>
+            <fieldset class="form-group">
+              <label for="recipeUrl">Recipe URL:</label>
+              <input type="text" class="form-control" id="recipeUrl">
+            </fieldset>
+          </form>
+          <button type="submit" class="btn btn-success">Submit</button>
+          <hr>
+          Or:
+          <hr>
+          <form>
+            <h4>Find recipe using the form below</h4>
+            <fieldset class="form-group">
+              <label for="recipeUrl">Recipe URL:</label>
+              <input type="text" class="form-control" id="recipeUrl">
+            </fieldset>
+          </form>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+        <div id="right" class="col-md-6">
+          Body content
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
