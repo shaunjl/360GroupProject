@@ -1,19 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-
-<title>Login Page</title>
-</head>
-<body>
-<h1>You are now logged in! </h1>
-<div ng-app="app" ng-controller="MainCtrl">
- This is a :  {{test}}
-
-  <button onclick="getLoggedInUser()">Click me</button>
-
-
-</div>
-
-<a href="/signout">Logout here</a>.
-</body>
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header clearfix">
+        <nav class="navbar navbar-light">
+          <a class="navbar-brand" href="/">
+            <i class="fa fa-cutlery"></i>&nbsp;&nbsp;Recipe To List
+          </a>
+          <div class="nav navbar-nav pull-xs-right">
+            <a class="btn btn-secondary" href="/signout"><i class="fa fa-sign-out"></i> Sign Out</a>
+          </div>
+        </nav>
+      </div>
+      <hr>
+      <div class="row">
+        <div id="left" class="col-md-6">
+          <form>
+            <h4>Enter recipe by URL</h4>
+            <fieldset class="form-group">
+              <label for="recipeUrl">Recipe URL:</label>
+              <input type="text" class="form-control" id="recipeUrl">
+            </fieldset>
+          </form>
+          <button type="submit" class="btn btn-success">Submit</button>
+          <hr>
+          Or:
+          <hr>
+          <form>
+            <h4>Find recipe using the form below</h4>
+            <fieldset class="form-group">
+              <label for="recipeUrl">Recipe URL:</label>
+              <input type="text" class="form-control" id="recipeUrl">
+            </fieldset>
+          </form>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+        <div id="right" class="col-md-6">
+          Body content
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
