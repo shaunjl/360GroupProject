@@ -14,13 +14,36 @@ app.controller('MainCtrl', [
       });
     });
 
- $scope.recipeFromUrl = function(url) {
-	console.log("THE USER URL: "+url);
-    return $http.post('/recipefromurl?url=' + encodeURIComponent(url)).success(function(data){
-      $scope.comments.push(data);
+//GET RECIPE BY URL
+ $scope.recipeFromUrl = function() {
+	
+	console.log("THE USER URL: "+ $scope.formRecipeUrl);
+    return $http.get('/recipefromurl?url=' + encodeURIComponent($scope.formRecipeUrl)).success(function(data){
+      	//console.log(data);
+	console.log("TITLE: "+data.title)
+	console.log("SOURCE URL: "+data.sourceUrl);
     });
   };
 
+//GET RECIPE BY INPUTS
+  $scope.recipeFromParams = function() {
+	
+	var cuisine = $scope.cuisine;
+        var diet = $scope.diet;
+        var tolerances = $scope.tolerances;
+        var meal = $scope.meal;
+        var type = $scope.type;
+	
+	console.log(cuisine);
+        console.log(diet);
+        console.log(tolerances);
+        console.log(meal);
+        console.log(type);
+
+    return $http.get('/recipesfromparams?url=' + encodeURIComponent($scope.formRecipeUrl)).success(function(data){
+
+    });
+  };
 
 
   }

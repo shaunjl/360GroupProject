@@ -1,8 +1,6 @@
 <!doctype html>
 <html>
   <head>
-
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -27,35 +25,35 @@
       <hr>
       <div class="row">
         <div id="left" class="col-md-6">
-          <form>
+          <form ng-submit="recipeFromUrl()">
             <h4>Enter recipe by URL</h4>
             <fieldset class="form-group">
               <label for="recipeUrl">Recipe URL:</label>
-              <input type="text" class="form-control" id="recipeUrl">
+              <input type="text" class="form-control"  ng-model="formRecipeUrl" id="recipeUrl">
             </fieldset>
+          <button type="submit" class="btn btn-success" >Submit</button>
           </form>
-          <button type="submit" class="btn btn-success">Submit</button>
           <hr>
           Or:
           <hr>
-          <form>
+          <form ng-submit="recipeFromParams()">
             <h4>Find recipe using the form below</h4>
             <fieldset class="form-group">
                  <label for="recipeUrl">Cuisine:</label>
-                 <input type="text" class="form-control" id="cuisine">
+                 <input type="text" class="form-control" ng-model="cuisine">
 	         <label for="recipeUrl">Diet:</label> 
-	         <input type="text" class="form-control" id="diet">
+	         <input type="text" class="form-control" ng-model="diet">
 		 <label for="recipeUrl">Tolerances:</label>
-                  <input type="text" class="form-control" id="tolerances">
+                  <input type="text" class="form-control" ng-model="tolerances">
 		 <label for="recipeUrl">Meal Name:</label>	
-	 	 <input type="text" class="form-control" id="meal">
+	 	 <input type="text" class="form-control" ng-model="meal">
 		 <label for="recipeUrl">Type:</label>
-		 <input type="text" class="form-control" id="type">
+		 <input type="text" class="form-control" ng-model="type">
 
+          <button type="submit" class="btn btn-success">Submit</button>
 
             </fieldset>
           </form>
-          <button type="submit" class="btn btn-success">Submit</button>
         </div>
         <div id="right" class="col-md-6">
           Body content
