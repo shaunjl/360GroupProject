@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Signup</title>
-</head>
-<body>
-<h1>Registration Details<div>
-<form action="/signup" method="POST" >
-<input type="text" name="username" placeholder="Username" required autofocus >
-<input type="password" name="password" placeholder="Password" required >
-<input type="email" name="email" placeholder="Email" required>
-<input type="text" name="firstName" placeholder="First Name" required>
-<input type="text" name="lastName" placeholder="Last Name" required>
-<button type="submit">Register</button>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Groceries</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="stylesheets/login.css">
+  </head>
+  <body>
+    <div class="container">
+      <form action="/signup" method="POST" class="form-signin">
+        <h2 class="form-signin-heading">Please enter your information</h2>
+	<input type="text" name="username" placeholder="Username" class="form-control" required autofocus >
+	<input type="password" name="password" placeholder="Password" class="form-control" required >
+	<input type="email" name="email" placeholder="Email" class="form-control" required>
+	<input type="text" name="firstName" placeholder="First Name" class="form-control" required>
+	<input type="text" name="lastName" placeholder="Last Name" class="form-control" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      </form>
+    </div> <!-- /container -->
 </html>
