@@ -25,7 +25,7 @@
       <hr>
       <div class="row">
         <div id="left" class="col-md-6">
-          <form ng-submit="recipeFromUrl()">
+          <form ng-submit="recipeFromUrl(); clearForms()" ng-hide="hideForms">
             <h4>Enter recipe by URL</h4>
             <fieldset class="form-group">
               <label for="recipeUrl">Recipe URL:</label>
@@ -33,10 +33,12 @@
             </fieldset>
           <button type="submit" class="btn btn-success" >Submit</button>
           </form>
-          <hr>
-          Or:
-          <hr>
-          <form ng-submit="recipeFromParams()">
+          <div ng-hide="hideForms">
+            <hr>
+            Or:
+            <hr>
+          </div>
+          <form ng-submit="recipeFromParams()" ng-hide="hideForms">
             <h4>Find recipe using the form below</h4>
             <fieldset class="form-group">
                  <label for="recipeUrl">Cuisine:</label>
@@ -53,6 +55,12 @@
           <button type="submit" class="btn btn-success">Submit</button>
 
             </fieldset>
+          </form>
+          <form ng-submit="addRecipeToUser()" ng-hide="hideSuggestion">
+            <h4>Add this recipe?</h4>
+            {{recipe.title}}            
+            <button type="submit" class="btn btn-success">Yes</button>
+            <button type="button" class="btn btn-error" ng-click="cancelAddRecipe()" >No</button>
           </form>
         </div>
         <div id="right" class="col-md-6">

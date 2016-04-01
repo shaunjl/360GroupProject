@@ -48,6 +48,13 @@ router.get('/user',isLoggedin, function(req, res){
     });
 });
 
+router.post('/recipe',isLoggedin, function(req, res){
+  User.findById(req.session.passport.user, function(err, user) {
+      // update user
+      user.addRecipe(req.body, function(){res.sendStatus(200)});  
+    });
+})
+
 router.get('/recipefromurl',isLoggedin,function(req,res,next){
     console.log(req.query)
     var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/extract?forceExtraction=false&url=" + encodeURIComponent(req.query.url)

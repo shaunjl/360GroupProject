@@ -2,7 +2,8 @@ var app =angular.module('app', [])
 app.controller('MainCtrl', [
   '$scope','$http',
   function($scope,$http){
-   
+    $scope.hideForms = false;
+    $scope.hideSuggestion = true; 
 //    $scope.staticRecipe = [{url:"http://allrecipes.com/recipes/669/meat-and-poultry/pork/bacon/"];
 //var person = {firstName:"John", lastName:"Doe", age:46};
 
@@ -14,13 +15,20 @@ app.controller('MainCtrl', [
       });
     });
 
+ $scope.clearForms = function() {
+  console.log("clearing forms");
+  $scope.formRecipeUrl = '';
+ }
+
 //GET RECIPE BY URL
  $scope.recipeFromUrl = function() {
-	
+	$scope.hideForms = true;
 	console.log("THE USER URL: "+ $scope.formRecipeUrl);
     return $http.get('/recipefromurl?url=' + encodeURIComponent($scope.formRecipeUrl)).success(function(data){
-      	//console.log(data);
-	console.log("TITLE: "+data.title)
+        $scope.recipe = data;
+        $scope.hideForms = true;      
+        $scope.hideSuggestion = false;	
+        console.log("TITLE: "+data.title)
 	console.log("SOURCE URL: "+data.sourceUrl);
     });
   };
@@ -44,7 +52,18 @@ app.controller('MainCtrl', [
 
     });
   };
+  
+  $scope.addRecipeToUser = function() {
+    return $http.post('/recipe', $scope.recipe).success(function(data){
+        $scope.hideForms = false;
+        $scope.hideSuggestion = true;
+    }); 
+  };
 
+  $scope.cancelAddRecipe = function() {
+    $scope.hideForms = false;
+    $scope.hideSuggestion = true;
+  };
 
   }
 ]);
