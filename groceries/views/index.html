@@ -4,21 +4,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-     <script src="javascripts/controller.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="javascripts/controller.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
   </head>
-  <body ng-app="app" ng-controller="MainCtrl">
+  <body class="body-class" ng-app="app" ng-controller="MainCtrl">
     <div class="container">
       <div class="header clearfix">
         <nav class="navbar navbar-light">
-          <a class="navbar-brand" href="/">
-            <i class="fa fa-cutlery"></i>&nbsp;&nbsp;Recipe To List
-          </a>
-
-          <div class="nav navbar-nav pull-xs-right">
-	    Welcome, {{user.firstName}}
-            <a class="btn btn-secondary" href="/signout"><i class="fa fa-sign-out"></i> Sign Out</a>
+          <a class="navbar-brand" href="/"><i class="fa fa-cutlery"></i>&nbsp;&nbsp;Recipe To List</a>
+          <div class="nav navbar-nav pull-sm-right pull-xs-left">
+            <span class="nav-item nav-link active">Welcome, {{user.firstName}}</span>
+            <a class="nav-item nav-link" href="/signout"><i class="fa fa-sign-out"></i> Sign out</a>
+            <div class="dropdown-menu"><a class="dropdown-item" href="#">Action</a></div>
           </div>
         </nav>
       </div>
@@ -31,13 +30,9 @@
               <label for="recipeUrl">Recipe URL:</label>
               <input type="text" class="form-control"  ng-model="formRecipeUrl" id="recipeUrl">
             </fieldset>
-            <button type="submit" class="btn btn-success" >Submit</button>
+            <button type="submit" class="btn btn-success">Submit</button>
           </form>
-          <div ng-hide="hideForms">
-            <hr>
-            Or:
-            <hr>
-          </div>
+          <div ng-hide="hideForms"><hr>Or:<hr></div>
           <form ng-submit="recipeFromParams()" ng-hide="hideForms">
             <h4>Find recipe using the form below</h4>
             <fieldset class="form-group">
@@ -72,13 +67,45 @@
           </form>
           <form ng-submit="addRecipeToUser()" ng-hide="hideSuggestion">
             <h4>Add this recipe?</h4>
-            {{recipe.title}}            
+            <fieldset class="form-group">{{recipe.title}}</fieldset>
             <button type="submit" class="btn btn-success">Yes</button>
-            <button type="button" class="btn btn-error" ng-click="cancelAddRecipe()" >No</button>
+            <button type="button" class="btn btn-danger" ng-click="cancelAddRecipe()" >No</button>
           </form>
         </div>
+        <hr class="hidden-hr">
         <div id="right" class="col-md-6">
-          Body content
+          <div class="btn-group pull-xs-right">
+            <div class="btn-group">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" ng-disabled="user.recipes.length == 0" data-toggle="dropdown">
+                Export
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item small" href="#"><i class="fa fa-file-text-o fa-fw"></i> Text file (not implemented)</a>
+                <a class="dropdown-item small" href="#"><i class="fa fa-envelope-o fa-fw"></i> Email (not implemented)</a>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-secondary" ng-disabled="user.recipes.length == 0" ng-click="deleteAllRecipes()">
+              Clear 
+            </button>
+          </div>
+          <h4>Recipes</h4>
+          <p class="text-muted" ng-hide="user.recipes">No recipes yet!</p>
+          <ul>
+            <li ng-repeat="recipe in user.recipes">
+              <a ng-href="{{recipe.url}}">{{ recipe.title }}</a>
+              <small>
+                <a href="#" ng-click="deleteRecipe(recipe._id)" class="text-muted list-delete">
+                  <i class="fa fa-trash-o"></i>
+                </a>
+              </small>
+            </li>
+          </ul>
+          <hr>
+          <h4>Ingredients</h4>
+          <p class="text-muted" ng-hide="user.ingredients">No ingredients yet!</p>
+          <ul>
+            <li ng-repeat="ingredient in user.ingredients">{{ ingredient }}</li>
+          </ul>
         </div>
       </div>
     </div>

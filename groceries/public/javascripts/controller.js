@@ -8,62 +8,75 @@ app.controller('MainCtrl', [
     $scope.mealTypeItems = ["main course", "side dish", "dessert", "appetizer", "salad", "bread", "breakfast", "soup", "beverage", "sauce", "drink"];
     $scope.hideForms = false;
     $scope.hideSuggestion = true; 
-//    $scope.staticRecipe = [{url:"http://allrecipes.com/recipes/669/meat-and-poultry/pork/bacon/"];
-//var person = {firstName:"John", lastName:"Doe", age:46};
+    //    $scope.staticRecipe = [{url:"http://allrecipes.com/recipes/669/meat-and-poultry/pork/bacon/"];
+    //var person = {firstName:"John", lastName:"Doe", age:46};
 
-//ON PAGE LOAD
-  angular.element(document).ready(function () { 
+    //ON PAGE LOAD
+    angular.element(document).ready(function () { 
       return $http.get('/user').success(function(data){
-	$scope.user=data;
-	 console.log($scope.user);
+        $scope.user=data;
+        console.log($scope.user);
       });
     });
 
- $scope.clearForms = function() {
-  console.log("clearing forms");
-  $scope.formRecipeUrl = '';
- }
+    $scope.clearForms = function() {
+      console.log("clearing forms");
+      $scope.formRecipeUrl = '';
+    }
 
-//GET RECIPE BY URL
- $scope.recipeFromUrl = function() {
-	$scope.hideForms = true;
-	console.log("THE USER URL: "+ $scope.formRecipeUrl);
-    return $http.get('/recipefromurl?url=' + encodeURIComponent($scope.formRecipeUrl)).success(function(data){
+    //GET RECIPE BY URL
+    $scope.recipeFromUrl = function() {
+      $scope.hideForms = true;
+      console.log("THE USER URL: "+ $scope.formRecipeUrl);
+      return $http.get('/recipefromurl?url=' + encodeURIComponent($scope.formRecipeUrl)).success(function(data){
         $scope.recipe = data;
         $scope.hideForms = true;      
         $scope.hideSuggestion = false;	
         console.log("TITLE: "+data.title)
-	console.log("SOURCE URL: "+data.sourceUrl);
-    });
-  };
+        console.log("SOURCE URL: "+data.sourceUrl);
+      });
+    };
 
-//GET RECIPE BY INPUTS
-  $scope.recipeFromParams = function() {
-	
-        var url = '/recipesfromparams?';
-        url += 'cuisine=' + encodeURIComponent($scope.cuisine);
-        url += '&diet=' + encodeURIComponent($scope.diet);
-        url += '&intolerance=' + encodeURIComponent($scope.intolerance);
-        url += '&mealType=' + encodeURIComponent($scope.mealType);
-        url += '&keywords=' + encodeURIComponent($scope.keywords); 
-        console.log(url);
-    return $http.get(url).success(function(data){
+    //GET RECIPE BY INPUTS
+    $scope.recipeFromParams = function() {
 
-    });
-  };
-  
-  $scope.addRecipeToUser = function() {
-    return $http.post('/recipe', $scope.recipe).success(function(data){
+      var url = '/recipesfromparams?';
+      url += 'cuisine=' + encodeURIComponent($scope.cuisine);
+      url += '&diet=' + encodeURIComponent($scope.diet);
+      url += '&intolerance=' + encodeURIComponent($scope.intolerance);
+      url += '&mealType=' + encodeURIComponent($scope.mealType);
+      url += '&keywords=' + encodeURIComponent($scope.keywords); 
+      console.log(url);
+      return $http.get(url).success(function(data){
+
+      });
+    };
+
+    $scope.cancelAddRecipe = function() {
+      $scope.hideForms = false;
+      $scope.hideSuggestion = true;
+    };
+
+
+    $scope.addRecipeToUser = function() {
+      return $http.post('/recipe', $scope.recipe).success(function (user) {
         $scope.hideForms = false;
         $scope.hideSuggestion = true;
-    }); 
-  };
+        $scope.user = user;
+      }); 
+    };
 
-  $scope.cancelAddRecipe = function() {
-    $scope.hideForms = false;
-    $scope.hideSuggestion = true;
-  };
+    $scope.deleteRecipe = function (id) {
+      return $http.delete('/recipes/' + id).success(function (user) {
+        $scope.user = user;
+      });
+    };
 
+    $scope.deleteAllRecipes = function (id) {
+      return $http.delete('/recipes').success(function (user) {
+        $scope.user = user;
+      });
+    };
   }
 ]);
 

@@ -9,6 +9,13 @@ body {
 
 @media (min-width: 750px) {
   #left {
-  border-right: 1px solid rgba(0,0,0,.1);
+    border-right: 1px solid rgba(0,0,0,.1);
   }
+  .hidden-hr {
+    display: none;
+  }
+}
+
+.list-delete:hover {
+  color: #C85A50;
 }

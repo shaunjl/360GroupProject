@@ -48,13 +48,6 @@ router.get('/user',isLoggedin, function(req, res){
     });
 });
 
-router.post('/recipe',isLoggedin, function(req, res){
-  User.findById(req.session.passport.user, function(err, user) {
-      // update user
-      user.addRecipe(req.body, function(){res.sendStatus(200)});  
-    });
-})
-
 router.get('/recipefromurl',isLoggedin,function(req,res,next){
     console.log(req.query)
     var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/extract?forceExtraction=false&url=" + encodeURIComponent(req.query.url)
@@ -106,5 +99,52 @@ router.get('/autocomplete',isLoggedin, function(req,res,next){
         });
  });
 
-return router;
+ router.post('/recipe', isLoggedin, function (req, res) {
+   User.findById(req.session.passport.user)
+   .then(function (user) {
+     var recipe = { url: req.body.sourceUrl, title: req.body.title };
+     user.recipes.push(recipe)
+     return user.save();
+   })
+   .then(function (user) {
+     return res.send(user);
+   })
+   .catch(function (error) {
+     console.log(error);
+     res.sendStatus(500);
+   });
+ })
+
+ router.delete('/recipes/:id', isLoggedin, function (req, res) {
+   User.findById(req.session.passport.user)
+   .then(function (user) {
+     var recipeId = req.params.id;
+     user.recipes.remove({ _id: recipeId })
+     return user.save();
+   })
+   .then(function (user) {
+     return res.send(user);
+   })
+   .catch(function (error) {
+     console.log(error);
+     res.sendStatus(500);
+   });
+ });
+
+ router.delete('/recipes', isLoggedin, function (req, res) {
+   User.findById(req.session.passport.user)
+   .then(function (user) {
+     user.recipes = [];
+     return user.save();
+   })
+   .then(function (user) {
+     return res.send(user);
+   })
+   .catch(function (error) {
+     console.log(error);
+     res.sendStatus(500);
+   });
+ });
+
+ return router;
 }
