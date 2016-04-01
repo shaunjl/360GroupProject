@@ -65,7 +65,7 @@ router.get('/recipefromurl',isLoggedin,function(req,res,next){
  });
 
 router.get('/recipesfromparams',isLoggedin,function(req,res,next){
-    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete"
+    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex"
     url += '?cuisine=' + encodeURIComponent(req.query.cuisine)
     url += '&diet=' + encodeURIComponent(req.query.diet)
     url += '&intolerances=' + encodeURIComponent(req.query.intolerance)
@@ -100,10 +100,25 @@ router.get('/autocomplete',isLoggedin, function(req,res,next){
  });
 
  router.post('/recipe', isLoggedin, function (req, res) {
+   var rawRecipe = req.body;
    User.findById(req.session.passport.user)
    .then(function (user) {
-     var recipe = { url: req.body.sourceUrl, title: req.body.title };
+     var recipe = { url: rawRecipe.sourceUrl, title: rawRecipe.title };
      user.recipes.push(recipe)
+     return user.save();
+   })
+   .then(function (user) {
+     var recipeId = user.recipes[user.recipes.length - 1]._id;
+     rawRecipe.extendedIngredients.forEach(function (ingredient) {
+       var newIngredient = {
+         name: ingredient.name,
+         aisle: ingredient.aisle,
+         quantity: ingredient.amount,
+         unit: ingredient.unitShort,
+         recipeId: recipeId,
+       }
+       user.ingredients.push(newIngredient);
+     });
      return user.save();
    })
    .then(function (user) {
@@ -116,10 +131,17 @@ router.get('/autocomplete',isLoggedin, function(req,res,next){
  })
 
  router.delete('/recipes/:id', isLoggedin, function (req, res) {
+   var recipeId = req.params.id;
    User.findById(req.session.passport.user)
    .then(function (user) {
-     var recipeId = req.params.id;
-     user.recipes.remove({ _id: recipeId })
+     console.log('BEFORE')
+     console.log(user.ingredients)
+     user.recipes.pull({ _id: recipeId });
+     user.ingredients = user.ingredients.filter(function (ingredient) {
+       return ingredient.recipeId.toString() !== recipeId;
+     });
+     console.log('AFTER')
+     console.log(user.ingredients)
      return user.save();
    })
    .then(function (user) {
@@ -135,6 +157,7 @@ router.get('/autocomplete',isLoggedin, function(req,res,next){
    User.findById(req.session.passport.user)
    .then(function (user) {
      user.recipes = [];
+     user.ingredients = [];
      return user.save();
    })
    .then(function (user) {
