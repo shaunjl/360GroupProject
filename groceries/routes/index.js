@@ -72,7 +72,7 @@ router.get('/recipefromurl',isLoggedin,function(req,res,next){
  });
 
 router.get('/recipesfromparams',isLoggedin,function(req,res,next){
-    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete"
+    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex"
     url += '?cuisine=' + encodeURIComponent(req.query.cuisine)
     url += '&diet=' + encodeURIComponent(req.query.diet)
     url += '&intolerances=' + encodeURIComponent(req.query.intolerance)

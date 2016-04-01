@@ -41,6 +41,10 @@
           <form ng-submit="recipeFromParams()" ng-hide="hideForms">
             <h4>Find recipe using the form below</h4>
             <fieldset class="form-group">
+              <label for="recipeUrl">Keywords:</label>
+              <input type="text" class="form-control" ng-model="keywords">
+            </fieldset>
+            <fieldset class="form-group">
               <label for="recipeUrl">Cuisine:</label>
               <select type="text" class="form-control" ng-model="cuisine">
                 <option ng-repeat="item in cuisineItems" value="{{item}}">{{item}}</option>
@@ -64,15 +68,19 @@
                 <option ng-repeat="item in mealTypeItems" value="{{item}}">{{item}}</option>
               </select>
             </fieldset>
-            <fieldset class="form-group">
-              <label for="recipeUrl">Keywords:</label>
-              <input type="text" class="form-control" ng-model="keywords">
-            </fieldset>
             <button type="submit" class="btn btn-success">Submit</button>
           </form>
           <form ng-submit="addRecipeToUser()" ng-hide="hideSuggestion">
             <h4>Add this recipe?</h4>
             {{recipe.title}}            
+            <button type="submit" class="btn btn-success">Yes</button>
+            <button type="button" class="btn btn-error" ng-click="cancelAddRecipe()" >No</button>
+          </form>
+          <form ng-submit="chooseRecipe()" ng-hide="hideMultiSuggestions">
+            <h4>How about one of these?</h4>
+            <select type="text" class="form-control" ng-model="suggestedChoice">
+                <option ng-repeat="item in multiSuggestions" value="{{item.title}}">{{item.title}}</option>
+            </select> 
             <button type="submit" class="btn btn-success">Yes</button>
             <button type="button" class="btn btn-error" ng-click="cancelAddRecipe()" >No</button>
           </form>
