@@ -82,7 +82,11 @@ app.controller('MainCtrl', [
       } else {
         url += '&keywords=' + encodeURIComponent("");
       }
-
+      if ($scope.includeIngredient !== undefined && $scope.includeIngredient !== "None"){
+        url += '&includeIngredient=' + encodeURIComponent($scope.includeIngredient);
+      } else {
+        url += '&includeIngredient=' + encodeURIComponent("");
+      }
       return $http.get(url).success(function(data){
         console.log('returned!');
         console.log(data);
@@ -94,9 +98,12 @@ app.controller('MainCtrl', [
     $scope.chooseRecipe = function() {
       console.log('suggestedChoice:');
       console.log($scope.suggestedChoice);
-      // TODO - add suggested choice
-      $scope.hideForms = false;
-      $scope.hideMultiSuggestions = true;
+      return $http.get('/spoonRecipe?id=' + $scope.suggestedChoice).success(function (recipe) {
+        return $http.post('/recipe', recipe).success(function (user) {
+        $scope.showForms();
+        $scope.user = user;
+        });
+      });
     };
 
     $scope.cancelAddRecipe = function() {

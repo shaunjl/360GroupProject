@@ -36,29 +36,33 @@
           <form ng-submit="recipeFromParams()" ng-hide="hideForms">
             <h4>Find recipe using the form below</h4>
             <fieldset class="form-group">
-              <label for="recipeUrl">Keywords:</label>
-              <input type="text" class="form-control" ng-model="keywords">
+              <label>Keywords:</label>
+              <input type="text" class="form-control" ng-model="keywords" required>
             </fieldset>
             <fieldset class="form-group">
-              <label for="recipeUrl">Cuisine:</label>
+              <label>Key Ingredient:</label>
+              <input type="text" class="form-control" ng-model="includeIngredient" required>
+            </fieldset>
+            <fieldset class="form-group">
+              <label>Cuisine:</label>
               <select type="text" class="form-control" ng-model="cuisine">
                 <option ng-repeat="item in cuisineItems" value="{{item}}">{{item}}</option>
               </select>
             </fieldset>
             <fieldset class="form-group">
-              <label for="recipeUrl">Diet:</label> 
+              <label>Diet:</label>
               <select type="text" class="form-control" ng-model="diet">
                 <option ng-repeat="item in dietItems" value="{{item}}">{{item}}</option>
               </select>
             </fieldset>
             <fieldset class="form-group">
-              <label for="recipeUrl">Intolerances:</label>
+              <label>Intolerances:</label>
               <select type="text" class="form-control" ng-model="intolerance">
                 <option ng-repeat="item in intoleranceItems" value="{{item}}">{{item}}</option>
               </select>
             </fieldset>
             <fieldset class="form-group">
-              <label for="recipeUrl">Meal Type:</label>	
+              <label>Meal Type:</label>
               <select type="text" class="form-control" ng-model="mealType">
                 <option ng-repeat="item in mealTypeItems" value="{{item}}">{{item}}</option>
               </select>
@@ -75,7 +79,7 @@
             <h4>How about one of these?</h4>
             <fieldset class="form-group">
               <select type="text" class="form-control" ng-model="suggestedChoice">
-                <option ng-repeat="item in multiSuggestions" value="{{item.title}}">{{item.title}}</option>
+                <option ng-repeat="item in multiSuggestions" value="{{item.id}}">{{item.title}}</option>
               </select> 
             </fieldset>
             <button type="submit" class="btn btn-success">Yes</button>

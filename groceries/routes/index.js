@@ -65,12 +65,13 @@ router.get('/recipefromurl',isLoggedin,function(req,res,next){
  });
 
 router.get('/recipesfromparams',isLoggedin,function(req,res,next){
-    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex"
-    url += '?cuisine=' + encodeURIComponent(req.query.cuisine)
-    url += '&diet=' + encodeURIComponent(req.query.diet)
-    url += '&intolerances=' + encodeURIComponent(req.query.intolerance)
-    url += '&query=' + encodeURIComponent(req.query.keywords)
-    url += '&type=' + encodeURIComponent(req.query.mealType)    
+    var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex?limitLicense=false&number=10&offset=0&ranking=1"
+    if (req.query.cuisine !== ""){url += '&cuisine=' + encodeURIComponent(req.query.cuisine) }
+    if (req.query.diet !== ""){url += '&diet=' + encodeURIComponent(req.query.diet) }
+    if (req.query.intolerance !== ""){ url += '&intolerances=' + encodeURIComponent(req.query.intolerance) }
+    if (req.query.keywords !== ""){ url += '&query=' + encodeURIComponent(req.query.keywords) }
+    if (req.query.mealType !== ""){ url += '&type=' + encodeURIComponent(req.query.mealType) }
+    if (req.query.includeIngredient !== ""){ url += '&includeIngredients=' + encodeURIComponent(req.query.includeIngredient) }
     console.log(url)
     unirest.get(url)
         .header("X-Mashape-Key", "syMrIkEfZUmshCO3nkdEO5DN4UENp1uAQvujsnMqDOGOwJOOXS")
@@ -86,6 +87,21 @@ router.get('/recipesfromparams',isLoggedin,function(req,res,next){
 
 router.get('/autocomplete',isLoggedin, function(req,res,next){
     var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete?query=" + encodeURIComponent(req.query.query)
+    console.log(url)
+    unirest.get(url)
+        .header("X-Mashape-Key", "syMrIkEfZUmshCO3nkdEO5DN4UENp1uAQvujsnMqDOGOwJOOXS")
+        .end(function (result) {
+            console.log(result.status, result.headers, result.body);
+            if(result.status == 200){
+                res.status(200).json(result.body);
+            } else {
+                res.status(404).json({'message': result.body.message});
+            }
+        });
+ });
+
+router.get('/spoonRecipe',isLoggedin, function(req,res,next){
+    var url = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/' + req.query.id + '/information?includeNutrition=false'
     console.log(url)
     unirest.get(url)
         .header("X-Mashape-Key", "syMrIkEfZUmshCO3nkdEO5DN4UENp1uAQvujsnMqDOGOwJOOXS")
