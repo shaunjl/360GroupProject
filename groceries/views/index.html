@@ -17,7 +17,7 @@
           </a>
 
           <div class="nav navbar-nav pull-xs-right">
-	    <p>Welcome, {{user.firstName}}</p>
+	    Welcome, {{user.firstName}}
             <a class="btn btn-secondary" href="/signout"><i class="fa fa-sign-out"></i> Sign Out</a>
           </div>
         </nav>
@@ -31,7 +31,7 @@
               <label for="recipeUrl">Recipe URL:</label>
               <input type="text" class="form-control"  ng-model="formRecipeUrl" id="recipeUrl">
             </fieldset>
-          <button type="submit" class="btn btn-success" >Submit</button>
+            <button type="submit" class="btn btn-success" >Submit</button>
           </form>
           <div ng-hide="hideForms">
             <hr>
@@ -41,20 +41,26 @@
           <form ng-submit="recipeFromParams()" ng-hide="hideForms">
             <h4>Find recipe using the form below</h4>
             <fieldset class="form-group">
-                 <label for="recipeUrl">Cuisine:</label>
-                 <input type="text" class="form-control" ng-model="cuisine">
-	         <label for="recipeUrl">Diet:</label> 
-	         <input type="text" class="form-control" ng-model="diet">
-		 <label for="recipeUrl">Tolerances:</label>
-                  <input type="text" class="form-control" ng-model="tolerances">
-		 <label for="recipeUrl">Meal Name:</label>	
-	 	 <input type="text" class="form-control" ng-model="meal">
-		 <label for="recipeUrl">Type:</label>
-		 <input type="text" class="form-control" ng-model="type">
-
-          <button type="submit" class="btn btn-success">Submit</button>
-
+              <label for="recipeUrl">Cuisine:</label>
+              <input type="text" class="form-control" ng-model="cuisine">
             </fieldset>
+            <fieldset class="form-group">
+              <label for="recipeUrl">Diet:</label> 
+              <input type="text" class="form-control" ng-model="diet">
+            </fieldset>
+            <fieldset class="form-group">
+              <label for="recipeUrl">Tolerances:</label>
+              <input type="text" class="form-control" ng-model="tolerances">
+            </fieldset>
+            <fieldset class="form-group">
+              <label for="recipeUrl">Meal Name:</label>	
+              <input type="text" class="form-control" ng-model="meal">
+            </fieldset>
+            <fieldset class="form-group">
+              <label for="recipeUrl">Type:</label>
+              <input type="text" class="form-control" ng-model="type">
+            </fieldset>
+            <button type="submit" class="btn btn-success">Submit</button>
           </form>
           <form ng-submit="addRecipeToUser()" ng-hide="hideSuggestion">
             <h4>Add this recipe?</h4>
