@@ -2,6 +2,10 @@ var app =angular.module('app', [])
 app.controller('MainCtrl', [
   '$scope','$http',
   function($scope,$http){
+    $scope.cuisineItems = [" - ", "african", "chinese", "japanese", "korean", "vietnamese", "thai", "indian", "british", "irish", "french", "italian", "mexican", "spanish", "middle eastern", "jewish", "american", "cajun", "southern", "greek", "german", "nordic", "eastern european", "caribbean", "latin american"];
+    $scope.dietItems = ["None", "pescetarian", "lacto vegetarian", "ovo vegetarian", "vegan", "paleo", "primal", "vegetarian"];
+    $scope.intoleranceItems = ["None", "dairy", "egg", "gluten", "peanut", "sesame", "seafood", "shellfish", "soy", "sulfite", "tree nut", "wheat"];
+    $scope.mealTypeItems = ["main course", "side dish", "dessert", "appetizer", "salad", "bread", "breakfast", "soup", "beverage", "sauce", "drink"];
     $scope.hideForms = false;
     $scope.hideSuggestion = true; 
 //    $scope.staticRecipe = [{url:"http://allrecipes.com/recipes/669/meat-and-poultry/pork/bacon/"];
@@ -36,19 +40,14 @@ app.controller('MainCtrl', [
 //GET RECIPE BY INPUTS
   $scope.recipeFromParams = function() {
 	
-	var cuisine = $scope.cuisine;
-        var diet = $scope.diet;
-        var tolerances = $scope.tolerances;
-        var meal = $scope.meal;
-        var type = $scope.type;
-	
-	console.log(cuisine);
-        console.log(diet);
-        console.log(tolerances);
-        console.log(meal);
-        console.log(type);
-
-    return $http.get('/recipesfromparams?url=' + encodeURIComponent($scope.formRecipeUrl)).success(function(data){
+        var url = '/recipesfromparams?';
+        url += 'cuisine=' + encodeURIComponent($scope.cuisine);
+        url += '&diet=' + encodeURIComponent($scope.diet);
+        url += '&intolerance=' + encodeURIComponent($scope.intolerance);
+        url += '&mealType=' + encodeURIComponent($scope.mealType);
+        url += '&keywords=' + encodeURIComponent($scope.keywords); 
+        console.log(url);
+    return $http.get(url).success(function(data){
 
     });
   };

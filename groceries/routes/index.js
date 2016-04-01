@@ -75,9 +75,9 @@ router.get('/recipesfromparams',isLoggedin,function(req,res,next){
     var url = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/ingredients/autocomplete"
     url += '?cuisine=' + encodeURIComponent(req.query.cuisine)
     url += '&diet=' + encodeURIComponent(req.query.diet)
-    url += '&intolerances=' + encodeURIComponent(req.query.intolerances.join())
-    url += '&query=' + encodeURIComponent(req.query.query)
-    url += '&type=' + encodeURIComponent(req.query.type)    
+    url += '&intolerances=' + encodeURIComponent(req.query.intolerance)
+    url += '&query=' + encodeURIComponent(req.query.keywords)
+    url += '&type=' + encodeURIComponent(req.query.mealType)    
     console.log(url)
     unirest.get(url)
         .header("X-Mashape-Key", "syMrIkEfZUmshCO3nkdEO5DN4UENp1uAQvujsnMqDOGOwJOOXS")

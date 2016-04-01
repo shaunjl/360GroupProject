@@ -42,23 +42,31 @@
             <h4>Find recipe using the form below</h4>
             <fieldset class="form-group">
               <label for="recipeUrl">Cuisine:</label>
-              <input type="text" class="form-control" ng-model="cuisine">
+              <select type="text" class="form-control" ng-model="cuisine">
+                <option ng-repeat="item in cuisineItems" value="{{item}}">{{item}}</option>
+              </select>
             </fieldset>
             <fieldset class="form-group">
               <label for="recipeUrl">Diet:</label> 
-              <input type="text" class="form-control" ng-model="diet">
+              <select type="text" class="form-control" ng-model="diet">
+                <option ng-repeat="item in dietItems" value="{{item}}">{{item}}</option>
+              </select>
             </fieldset>
             <fieldset class="form-group">
-              <label for="recipeUrl">Tolerances:</label>
-              <input type="text" class="form-control" ng-model="tolerances">
+              <label for="recipeUrl">Intolerances:</label>
+              <select type="text" class="form-control" ng-model="intolerance">
+                <option ng-repeat="item in intoleranceItems" value="{{item}}">{{item}}</option>
+              </select>
             </fieldset>
             <fieldset class="form-group">
-              <label for="recipeUrl">Meal Name:</label>	
-              <input type="text" class="form-control" ng-model="meal">
+              <label for="recipeUrl">Meal Type:</label>	
+              <select type="text" class="form-control" ng-model="mealType">
+                <option ng-repeat="item in mealTypeItems" value="{{item}}">{{item}}</option>
+              </select>
             </fieldset>
             <fieldset class="form-group">
-              <label for="recipeUrl">Type:</label>
-              <input type="text" class="form-control" ng-model="type">
+              <label for="recipeUrl">Keywords:</label>
+              <input type="text" class="form-control" ng-model="keywords">
             </fieldset>
             <button type="submit" class="btn btn-success">Submit</button>
           </form>
