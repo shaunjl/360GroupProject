@@ -185,5 +185,38 @@ router.get('/spoonRecipe',isLoggedin, function(req,res,next){
    });
  });
 
+// TODO- this actually adds to the ingredients in mongo
+// TODO- here
+function combine_ingredients(i1,i2) {
+    return (parseInt(i1.quantity) + parseInt(i2.quantity)).toString();
+}
+
+ router.post('/combineIngredients', isLoggedin, function (req, res) {
+   User.findById(req.session.passport.user)
+   .then(function (user) {
+     var ingredients = {};
+     user.ingredients.forEach(function (ingredient) {
+         console.log(ingredient);
+         console.log(ingredient.name);
+         if (ingredient.name in ingredients){
+            var q = combine_ingredients(ingredients[ingredient.name], ingredient);
+            console.log(q);
+   	    ingredients[ingredient.name].quantity = q;
+	} else{
+	    ingredients[ingredient.name] = ingredient;
+	}
+     });
+     console.log(ingredients);
+     return user.save();
+   })
+   .then(function (user) {
+     return res.send(user);
+   })
+   .catch(function (error) {
+     console.log(error);
+     res.sendStatus(500);
+   });
+ })
+
  return router;
 }

@@ -128,7 +128,12 @@ app.controller('MainCtrl', [
         $scope.user = user;
       });
     };
-
+   
+    $scope.combineIngredients = function () {
+      return $http.post('/combineIngredients', $scope.recipe).success(function (user) {
+        $scope.user = user;
+      });
+    };
   }
 ]);
 
