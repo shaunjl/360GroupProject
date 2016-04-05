@@ -11,6 +11,9 @@ var UserSchema = new Schema({
     recipes: [{ url: String, title: String }],
     ingredients: [
       { name: String, aisle: String, quantity: String, unit: String, recipeId: Schema.ObjectId }
+    ],
+    combinedIngredients: [
+      { name: String, aisle: String, quantities: [{unit: String, quantity: String}] }
     ]
 });
 
