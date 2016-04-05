@@ -135,6 +135,11 @@ router.get('/spoonRecipe',isLoggedin, function(req,res,next){
        }
        user.ingredients.push(newIngredient);
      });
+     console.log("combined ingredients before: ")
+     console.log(JSON.stringify(user.combinedIngredients));
+     combineIngredients(user);
+     console.log("combined ingredients after: ")
+     console.log(JSON.stringify(user.combinedIngredients));
      return user.save();
    })
    .then(function (user) {
@@ -158,6 +163,7 @@ router.get('/spoonRecipe',isLoggedin, function(req,res,next){
      });
      console.log('AFTER')
      console.log(user.ingredients)
+     combineIngredients(user)
      return user.save();
    })
    .then(function (user) {
@@ -174,6 +180,7 @@ router.get('/spoonRecipe',isLoggedin, function(req,res,next){
    .then(function (user) {
      user.recipes = [];
      user.ingredients = [];
+     user.combinedIngredients = [];
      return user.save();
    })
    .then(function (user) {
@@ -185,28 +192,59 @@ router.get('/spoonRecipe',isLoggedin, function(req,res,next){
    });
  });
 
-// TODO- this actually adds to the ingredients in mongo
-// TODO- here
-function combine_ingredients(i1,i2) {
-    return (parseInt(i1.quantity) + parseInt(i2.quantity)).toString();
+function combineIngredientHelper(combinedIngredient,ingredient) {
+    var unit_in = false;
+    combinedIngredient.quantities.forEach(function(q){
+        if (q.unit === ingredient.unit){
+          unit_in = true;
+          // combine
+          console.log("found multiple"); 
+          q.quantity = (parseInt(q.quantity) + parseInt(ingredient.quantity)).toString();
+        }
+    })
+    if (!unit_in)
+    {
+      combinedIngredient.quantities.push({quantity: ingredient.quantity, unit: ingredient.unit})
+    }
 }
 
+ function combineIngredients (user) {
+     user.combinedIngredients = [];
+     var ingredients = {};
+     user.ingredients.forEach(function (ingredient) {
+         if (ingredient.name in ingredients){
+            combineIngredientHelper(ingredients[ingredient.name], ingredient);
+        } else{
+            ingredients[ingredient.name] = {
+                name: ingredient.name,
+                aisle: ingredient.aisle,
+                quantities: [{quantity: ingredient.quantity, unit: ingredient.unit}]
+                };
+        }
+      });
+     Object.keys(ingredients).forEach(function (key) {
+       user.combinedIngredients.push(ingredients[key]);
+     });
+ }
+
+/*
  router.post('/combineIngredients', isLoggedin, function (req, res) {
    User.findById(req.session.passport.user)
    .then(function (user) {
      var ingredients = {};
      user.ingredients.forEach(function (ingredient) {
-         console.log(ingredient);
-         console.log(ingredient.name);
          if (ingredient.name in ingredients){
-            var q = combine_ingredients(ingredients[ingredient.name], ingredient);
-            console.log(q);
-   	    ingredients[ingredient.name].quantity = q;
-	} else{
-	    ingredients[ingredient.name] = ingredient;
-	}
+            combine_ingredients(ingredients[ingredient.name], ingredient);
+        } else{
+            ingredients[ingredient.name] = {
+                name: ingredient.name,
+                aisle: ingredient.aisle,
+                quantities: [{quantity: ingredient.quantity, unit: ingredient.unit}]
+                };
+        }
      });
-     console.log(ingredients);
+     console.log(JSON.stringify(ingredients));
+     user.combinedIngredients = ingredients;
      return user.save();
    })
    .then(function (user) {
@@ -217,6 +255,6 @@ function combine_ingredients(i1,i2) {
      res.sendStatus(500);
    });
  })
-
+*/
  return router;
 }
