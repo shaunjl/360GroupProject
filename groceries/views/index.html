@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+     <title>Recipe To List</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -94,7 +95,7 @@
                 Export
               </button>
               <div class="dropdown-menu">
-                <a class="dropdown-item small" href="#"><i class="fa fa-file-text-o fa-fw"></i> Text file (not implemented)</a>
+                <a class="dropdown-item small" ng-click="exportAsTxt()" ref="#"><i class="fa fa-file-text-o fa-fw"></i> Text file</a>
                 <a class="dropdown-item small" href="#"><i class="fa fa-envelope-o fa-fw"></i> Email (not implemented)</a>
               </div>
             </div>
@@ -106,7 +107,7 @@
           <p class="text-muted" ng-hide="user.recipes">No recipes yet!</p>
           <ul>
             <li ng-repeat="recipe in user.recipes">
-              <a ng-href="{{recipe.url}}">{{ recipe.title }}</a>
+              <a ng-href="{{recipe.url}}" target="_blank">{{ recipe.title }}</a>
               <small>
                 <a href="#" ng-click="deleteRecipe(recipe._id)" class="text-muted list-delete">
                   <i class="fa fa-trash-o"></i>

@@ -134,6 +134,38 @@ app.controller('MainCtrl', [
         $scope.user = user;
       });
     };
+    
+     $scope.exportAsTxt = function () {
+	var txtString = $scope.user.firstName + "'s Shopping List\n\n";
+	 $scope.user.combinedIngredients.forEach(function addToString(ingredient) {
+		     ingredient.quantities.forEach(function(q, index, array){
+		      if(array.length!==0) txtString+=q.quantity + " "+q.unit+" ";
+ 	   	      if(index!==array.length-1){
+			     txtString+="+ ";
+			}
+			
+		});
+		     txtString+=ingredient.name + "\n";
+	     });
+
+   	 return makeTextFile(txtString);
+    };
+
+    makeTextFile = function (text) {
+	    var a = document.createElement("a");
+	    document.body.appendChild(a);
+	    a.style = "display: none";
+	    var textFile = null;
+	    var data = new Blob([text], {type: 'text/plain'});
+	    textFile = window.URL.createObjectURL(data);
+	      a.href = textFile;
+              a.download = $scope.user.firstName + "'s Shopping List";
+	      a.click();
+	    window.URL.revokeObjectURL(textFile);
+	    return;
+  };
+
+
   }
 ]);
 
