@@ -199,7 +199,7 @@ function combineIngredientHelper(combinedIngredient,ingredient) {
           unit_in = true;
           // combine
           console.log("found multiple"); 
-          q.quantity = (parseInt(q.quantity) + parseInt(ingredient.quantity)).toString();
+          q.quantity = (parseFloat(q.quantity) + parseFloat(ingredient.quantity)).toString();
         }
     })
     if (!unit_in)
